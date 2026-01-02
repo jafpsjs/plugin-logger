@@ -2,13 +2,13 @@ import fp from "fastify-plugin";
 import type {} from "fastify";
 
 
-export type TemplatePluginOptions = {
+export type LoggerPluginOptions = {
   value: string;
 };
 
-export const name = "@jafps/plugin-template";
+export const name = "@jafps/plugin-logger";
 
-export default fp<TemplatePluginOptions>(
+export default fp<LoggerPluginOptions>(
   async (app, opts) => {
     const { value } = opts;
     app.decorate("hello", () => value);
@@ -24,5 +24,11 @@ export default fp<TemplatePluginOptions>(
 declare module "fastify" {
   interface FastifyInstance {
     readonly hello: () => string;
+  }
+}
+
+declare module "pino" {
+  interface LogFnFields {
+    err?: Error;
   }
 }

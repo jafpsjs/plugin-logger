@@ -1,9 +1,8 @@
 {
-  "name": "@jafps/plugin-template",
+  "name": "@jafps/plugin-logger",
   "version": "1.0.0",
-  "description": "",
+  "description": "Fastify plugin for logging.",
   "type": "module",
-  "private": true,
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc",
@@ -14,12 +13,12 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jafpsjs/plugin-template.git"
+    "url": "git+https://github.com/jafpsjs/plugin-logger.git"
   },
   "bugs": {
-    "url": "https://github.com/jafpsjs/plugin-template/issues"
+    "url": "https://github.com/jafpsjs/plugin-logger/issues"
   },
-  "homepage": "https://github.com/jafpsjs/plugin-template#readme",
+  "homepage": "https://github.com/jafpsjs/plugin-logger#readme",
   "imports": {},
   "exports": {
     ".": {
@@ -46,6 +45,7 @@
     "typescript-eslint": "^8.48.0"
   },
   "dependencies": {
-    "fastify-plugin": "^5.1.0"
+    "fastify-plugin": "^5.1.0",
+    "typebox": "^1.0.71"
   }
 }
