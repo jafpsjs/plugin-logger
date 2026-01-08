@@ -4,13 +4,12 @@ import fastify from "fastify";
 import plugin from "../index.js";
 
 describe("@jafps/plugin-logger", () => {
-  describe("hello", () => {
-    it("should return value", async () => {
-      const value = "world";
+  describe("logFor", () => {
+    it("should create logger", async () => {
       const app = await fastify();
-      await app.register(plugin, { value });
-      const result = app.hello();
-      assert.equal(result, value);
+      await app.register(plugin, { config: {} });
+      const result = app.logFor("a");
+      assert.ok(result);
     });
   });
 });

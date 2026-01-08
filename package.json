@@ -19,10 +19,17 @@
     "url": "https://github.com/jafpsjs/plugin-logger/issues"
   },
   "homepage": "https://github.com/jafpsjs/plugin-logger#readme",
-  "imports": {},
+  "imports": {
+    "#schema": {
+      "import": "./dist/schema/index.js"
+    }
+  },
   "exports": {
     ".": {
       "import": "./dist/index.js"
+    },
+    "./schema": {
+      "import": "./dist/schema/index.js"
     }
   },
   "keywords": [
@@ -46,6 +53,7 @@
   },
   "dependencies": {
     "fastify-plugin": "^5.1.0",
+    "pino": "^10.1.0",
     "typebox": "^1.0.71"
   }
 }

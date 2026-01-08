@@ -1,17 +1,25 @@
 import fp from "fastify-plugin";
-import type {} from "fastify";
+import { resolveLoggerOptions } from "./resolve-logger-options.js";
+import type { FastifyBaseLogger } from "fastify";
+import type { LoggerConfig } from "#schema";
 
+const configSymbol = Symbol("LoggerConfig");
 
 export type LoggerPluginOptions = {
-  value: string;
+  config: LoggerConfig;
 };
 
 export const name = "@jafps/plugin-logger";
 
 export default fp<LoggerPluginOptions>(
   async (app, opts) => {
-    const { value } = opts;
-    app.decorate("hello", () => value);
+    const { config } = opts;
+    app.decorate(configSymbol, config);
+    app.decorate("logFor", function (this, module, components = []) {
+      const paths = [module, ...components].join(".");
+      const opts = resolveLoggerOptions(this[configSymbol], paths);
+      return app.log.child({ _meta: { module, paths } }, opts);
+    });
   },
   {
     decorators: {},
@@ -21,14 +29,20 @@ export default fp<LoggerPluginOptions>(
   }
 );
 
+/* node:coverage disable */
 declare module "fastify" {
   interface FastifyInstance {
-    readonly hello: () => string;
+    readonly [configSymbol]: LoggerConfig;
+    logFor: (module: string, components?: string[]) => FastifyBaseLogger;
   }
 }
 
 declare module "pino" {
   interface LogFnFields {
+    _meta: {
+      module: string;
+      paths: string;
+    };
     err?: Error;
   }
 }
